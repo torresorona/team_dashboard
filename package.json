@@ -1,0 +1,27 @@
+{
+  "name": "team_dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npm tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torresorona/team_dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/torresorona/team_dashboard/issues"
+  },
+  "homepage": "https://github.com/torresorona/team_dashboard#readme",
+  "dependencies": {
+    "inquirer": "^8.2.5",
+    "jest": "^29.4.1"
+  }
+}
