@@ -1,7 +1,9 @@
 const fs = require('fs')
+const path = require('path');
+
 
 module.exports = (answers, internAnswers) => {
-    let employeesJSON = fs.readFileSync('../db/employees.js', 'utf-8');
+    let employeesJSON = fs.readFileSync(path.join(__dirname, '../db') + '/employees.json', 'utf-8');
     let employees = JSON.parse(employeesJSON);
 
     let intern = {
@@ -16,5 +18,5 @@ module.exports = (answers, internAnswers) => {
 
     employeesJSON = JSON.stringify(employees);
 
-    fs.writeFileSync("../db/employees.json", employeesJSON, "utf-8");
+    fs.writeFileSync(path.join(__dirname, '../db') + '/employees.json', employeesJSON, "utf-8");
 }
