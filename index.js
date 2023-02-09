@@ -1,10 +1,6 @@
-const nextAction = require('./src/nextAction');
+const Dashboard = require('./src/Dashboard');
 
-async function init() {
-    let terminate = 0;
-    while (terminate === 0) {
-        terminate = await nextAction();
-    }
-}
+// Initialize a new Dashboard object
+const dashboard = new Dashboard();
 
-init();
+dashboard.init();
