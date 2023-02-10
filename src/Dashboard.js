@@ -1,6 +1,11 @@
 const inquirer = require('inquirer');
-const Questions = require('./Questions')
-const Manager = require('../lib/manager')
+const fs = require('fs');
+const path = require('path');
+const Questions = require('./Questions');
+const Manager = require('../lib/manager');
+const Engineer = require('../lib/engineer');
+const Intern = require('../lib/intern')
+const generateDashboard = ('./generateDashboard');
 
 
 class Dashboard {
@@ -66,7 +71,16 @@ class Dashboard {
     }
 
     saveTeamMember(member) {
-        
+        let employeesJSON = fs.readFileSync(path.join(__dirname, '../db') + '/employees.json', 'utf-8');
+        let employees = JSON.parse(employeesJSON);
+
+        employees.push(member);
+
+        employeesJSON = JSON.stringify(employees);
+
+        fs.writeFileSync(path.join(__dirname, '../db') + '/employees.json', employeesJSON, "utf-8");
+
+        this.nextAction();
     }
 
     askForPosition() {
@@ -84,6 +98,27 @@ class Dashboard {
             })
     }
 
+    nextAction() {
+        inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'nextAction',
+                    message: "What will you like to do next?",
+                    choices: ['Add Team Member', 'Generate Dashboard', 'Clear all Team Members']
+                }
+            ])
+            .then((answer) => {
+                if (answer.nextAction === 'Add Team Member') {
+                    this.nextTeamMember();
+                } else if (answer.nextAction === 'Generate Dashboard') {
+                    console.log("Dashboard index.html has been generated");
+                } else {
+                    this.clear();
+                }
+            })
+    }
+
     clear() {
         inquirer
             .prompt({
@@ -95,6 +130,7 @@ class Dashboard {
             .then((answer) => {
                 if (answer.clearConfirmation === false) {
                     console.log('Clearing action aborted');
+                    this.nextAction();
                 } else {
                     fs.writeFileSync(path.join(__dirname, '../db') + '/employees.json', '[]', 'utf-8');
 
